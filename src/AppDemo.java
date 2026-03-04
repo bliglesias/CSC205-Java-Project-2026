@@ -1,5 +1,6 @@
-public class App {
+import java.util.Scanner;
+
+public class AppDemo {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
     }
 }
