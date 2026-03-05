@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Menu {
     private ArrayList<Item> menu = new ArrayList<>();
 
+    //Create
     public Menu(){
         menu.add(new Food("Pizza", 9.99, false,"HOT"));
         menu.add(new Food("Hotdog", 1.69, false,"HOT"));
@@ -15,6 +16,7 @@ public class Menu {
         menu.add(new Drink("Water", 0.00, true, "Small"));
     }
     
+    //Read
     public void show(){
         for (int i = 0; i < menu.size(); i++) {
             System.out.println((i + 1) + ") " + menu.get(i));

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AppDemo {
@@ -19,41 +20,55 @@ public class AppDemo {
 
         //Intro
         System.out.println("======= Welcome to Java Bites =======");
-        System.out.print("Enter your name:  ");
-        userName = scanner.nextLine();
-
-        System.out.println("Menu");
-        menu.show();
-
-        //Append to the list
-        System.out.print("Select item numbers to add to cart (comma-separated): ");
-        choice = scanner.nextLine();
-        choices = choice.split(",");
-        for (String x : choices) {
-            customer.addItem(menu, Integer.parseInt(x.trim()));
-        }
         
-        // check bool: gluten
-        customer.allergenCheck();
-        System.out.print("Remove items that have gluten? ");
-        prompt = scanner.nextLine();
+        try{    
+            System.out.print("Enter your name:  ");
+            userName = scanner.nextLine();
 
-        System.out.println("Updated cart: ");
-        if(prompt.equalsIgnoreCase("yes")){
-            customer.updateAllergens();
+            System.out.println("Menu");
+            menu.show();
+
+            //Append to the list
+            System.out.print("Select item numbers to add to cart (comma-separated): ");
+            choice = scanner.nextLine();
+            choices = choice.split(",");
+
+            boolean validItems = false;
+            while(!validItems){
+                try{
+                    for (String x : choices) {
+                    customer.addItem(menu, Integer.parseInt(x.trim()));
+                    }
+                    validItems = true;
+                }
+                catch(NumberFormatException e){
+                    System.out.println("Try again. You may have misplaced that comma!");
+                }
+            }
+            // check bool: gluten
+            customer.allergenCheck();
+            System.out.print("Remove items that have gluten? ");
+            prompt = scanner.nextLine();
+
+            System.out.println("Updated cart: ");
+            if(prompt.equalsIgnoreCase("yes")){
+                customer.updateAllergens();
+            }
+            customer.show();
+
+            System.out.println("Would you like to leave a tip?");
+            prompt = scanner.nextLine();
+            if(prompt.equalsIgnoreCase("yes")){
+                System.out.println("Enter tip amount: ");
+                tip = scanner.nextDouble();
+                scanner.nextLine();
+                customer.setTip(tip);
+            }
+            System.out.printf("\nReceipt for %s", userName);
         }
-        customer.show();
-
-        System.out.println("Would you like to leave a tip?");
-        prompt = scanner.nextLine();
-        if(prompt.equalsIgnoreCase("yes")){
-            System.out.println("Enter tip amount: ");
-            tip = scanner.nextDouble();
-            scanner.nextLine();
-            customer.setTip(tip);
+        catch(InputMismatchException e){
+            System.out.println("Wrong data type entered. " + e.getMessage());
         }
-        System.out.printf("\nReceipt for %s", userName);
-
         customer.showReceipt();
         System.out.println("Thanks for shopping with us!");
         

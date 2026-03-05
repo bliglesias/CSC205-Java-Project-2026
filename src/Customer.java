@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Customer {
+    // my box
     private ArrayList<Item> customerList = new ArrayList<>();
     private double tip;
 
@@ -10,15 +11,17 @@ public class Customer {
 
     public void setTip(double tip){ this.tip = tip; }
     public double getTip(){ return tip; }
+
+    //Create
     public void addItem(Menu menu, int choice){ customerList.add(menu.getMenu().get(choice - 1)); }
 
-    // check the list at anytime
+    //Read
     public void show(){
         for (Item item : customerList) {
             System.out.println(item);
         }
      }
-    // check for gluten
+    // Read: check for gluten
     public void allergenCheck(){
         for(Item item: customerList){
             if(!item.isGlutenFree()){
@@ -26,7 +29,7 @@ public class Customer {
             }
         }
     }
-    // crUd: update the list
+    // Update/Delete
     public void updateAllergens(){
         ArrayList<Item> glutenFreeList = new ArrayList<>();
         for(Item item: customerList){
@@ -45,7 +48,8 @@ public class Customer {
         total += tip;
         return total;
     }
-    // 
+   
+    //Finish-Line
     public void showReceipt(){
         for (Item item : customerList) {
             System.out.println(item.getName() + " " + item.getPrice());
