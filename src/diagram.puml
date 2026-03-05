@@ -1,0 +1,35 @@
+@startuml
+
+!pragma layout smetana
+
+abstract class Item{
+    # name: string
+    # price: double
+    # glutenFree: boolean
+
+    +abstract isGlutenFree();
+    +Item()
+    +Item(name: String, price: double, glutenFree: boolean)
+    +getName(): return name: String
+    +getPrice(): return price: double
+}
+class Food{
+    +super(name, price, glutenFree)
+    +isGlutenFree(): boolean
+}
+class Drink{
+    +super(name, price, glutenFree)
+    +isGlutenFree(): boolean
+}
+class Order{
+    -ArrayList<menuItems> menuOrder
+    -ArrayList<menuItems> customerOrder
+    +Order(the entire list)
+    +addItem(Items): void
+    +calculateTotal(): double
+    +printReciept(): void
+}
+
+Food --> menuItems
+Drink --> menuItems
+@enduml

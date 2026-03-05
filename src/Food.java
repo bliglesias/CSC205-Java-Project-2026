@@ -1,13 +1,13 @@
-public class Food extends menuItems{
-    @Override
-    public boolean isGlutenFree(){ return glutenFree; }
+public class Food extends Item{
+    private String temperature;
 
-    public Food(String name, double price, boolean glutenFree){
+    public Food(String name, double price, boolean glutenFree, String temperature){
         super(name, price, glutenFree);
-    }
-    @Override
-    public String toString(){
-        return name + " " + price;
+        this.temperature = temperature;
     }
     
+    @Override
+    public String toString(){
+        return super.toString() + " [" + temperature +"]";
+    }
 }
