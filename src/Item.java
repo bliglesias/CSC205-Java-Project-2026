@@ -3,12 +3,6 @@ public abstract class Item {
     protected double price;
     protected boolean glutenFree;
 
-    // public Item(){
-    //     this.name = "";
-    //     this.price = 0.0;
-    //     this.glutenFree = false;
-    // }
-
     public Item(String name, double price, boolean glutenFree) {
         this.name = name;
         this.price = price;

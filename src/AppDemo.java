@@ -3,73 +3,69 @@ import java.util.Scanner;
 
 public class AppDemo {
     public static void main(String[] args) throws Exception {
+        //Objects
+        Menu menu = new Menu();
+        Customer customer = new Customer();
         Scanner scanner = new Scanner(System.in);
         
         //Variables
         String userName;
         String choice;
-        String[] choices;
-        String prompt;
-        double tip;
+        String[] csvString;
        
-
-        //Objects
-        Menu menu = new Menu();
-        Customer customer = new Customer();
-
-
         //Intro
         System.out.println("======= Welcome to Java Bites =======");
+
+        // Username
+        System.out.print("\nEnter your name: ");
+        userName = scanner.nextLine();
         
-        try{    
-            System.out.print("Enter your name:  ");
-            userName = scanner.nextLine();
+        menu.show();
 
-            System.out.println("Menu");
-            menu.show();
+        // APPEND THE LIST
+        System.out.print("Select item numbers to add to cart (comma-separated) ");
+        // try here
+        boolean checkFlag = false;
+        while(!checkFlag){
+            try {
+                choice = scanner.nextLine();
+                csvString = choice.split(",");
 
-            //Append to the list
-            System.out.print("Select item numbers to add to cart (comma-separated): ");
-            choice = scanner.nextLine();
-            choices = choice.split(",");
-
-            boolean validItems = false;
-            while(!validItems){
-                try{
-                    for (String x : choices) {
-                    customer.addItem(menu, Integer.parseInt(x.trim()));
-                    }
-                    validItems = true;
+                for (String filter : csvString) {
+                customer.append(menu, Integer.parseInt(filter.trim()));
                 }
-                catch(NumberFormatException e){
-                    System.out.println("Try again. You may have misplaced that comma!");
-                }
+                //break out of the loop
+                checkFlag = true;
             }
-            // check bool: gluten
-            customer.allergenCheck();
-            System.out.print("Remove items that have gluten? ");
-            prompt = scanner.nextLine();
-
-            System.out.println("Updated cart: ");
-            if(prompt.equalsIgnoreCase("yes")){
-                customer.updateAllergens();
+            catch(IndexOutOfBoundsException e){
+                System.out.println("You may have misplaced that comma. Try Again");
+                System.out.print("Select item numbers to add to cart (comma-separated) ");
             }
-            customer.show();
-
-            System.out.println("Would you like to leave a tip?");
-            prompt = scanner.nextLine();
-            if(prompt.equalsIgnoreCase("yes")){
-                System.out.println("Enter tip amount: ");
-                tip = scanner.nextDouble();
-                scanner.nextLine();
-                customer.setTip(tip);
+            catch (Exception e) {
+                System.out.println("New error: " + e.getMessage());
+                break;
             }
-            System.out.printf("\nReceipt for %s", userName);
         }
-        catch(InputMismatchException e){
-            System.out.println("Wrong data type entered. " + e.getMessage());
+        
+        //Gluten check
+        customer.showGlutenOrder();
+        System.out.print("\nThese items have gluten! Remove items containing gluten? ");
+        choice = scanner.nextLine();
+        customer.delete(choice);
+        
+        // prompt for tip
+        System.out.print("Would you like to leave a tip?: ");
+        choice = scanner.nextLine();
+        if(choice.equalsIgnoreCase("yes")){
+            System.out.print("Enter tip amount: ");
+            double tip = scanner.nextDouble();
+            scanner.nextLine();
+            customer.addTip(tip);
         }
-        customer.showReceipt();
+        scanner.close();
+
+        //Receipt
+        customer.checkout(userName);
         System.out.println("Thanks for shopping with us!");
         
     }

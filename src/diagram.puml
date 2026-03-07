@@ -1,35 +1,67 @@
-@startuml
+@startuml Porject
 
 !pragma layout smetana
 
 abstract class Item{
-    # name: string
-    # price: double
-    # glutenFree: boolean
+    #name: string
+    #price: double
+    #glutenFree: boolean
 
-    +abstract isGlutenFree();
-    +Item()
     +Item(name: String, price: double, glutenFree: boolean)
-    +getName(): return name: String
-    +getPrice(): return price: double
+    +getName(): String
+    +getPrice(): double
+    +isGlutenFree(): boolean
+
+    +toString(): String
 }
 class Food{
-    +super(name, price, glutenFree)
-    +isGlutenFree(): boolean
+    -temperature: String
+
+    +super(name, price, glutenFree, temperature)
+    +toString(): String
 }
 class Drink{
-    +super(name, price, glutenFree)
-    +isGlutenFree(): boolean
+    -size: String
+
+    +super(name, price, glutenFree, size)
+    +toString(): String
+}
+class Menu{
+    -menuList: ArrayList<Item>
+
+    +menu(): ArrayList
+    +show(); void
+    +getMenu(): ArrayList<Item>
+}
+class Customer{
+    -order: Order
+
+    +getOrder(): void
+    +showGlutenOrder(): void
+    +delete(String input): void
+    +addTip(double Tip): void
+    +checkout(String user): void
+    +append(Menu menu, int index): void
 }
 class Order{
-    -ArrayList<menuItems> menuOrder
-    -ArrayList<menuItems> customerOrder
-    +Order(the entire list)
-    +addItem(Items): void
-    +calculateTotal(): double
-    +printReciept(): void
+    -itemList: ArrayList
+    -tip: double
+
+    +getTip(): double
+    +setTip(double tip): void
+    +show(): void
+    +showGluten(): void
+    +addItem(Item item): void
+    +removeGluten(String input): void
+    +checkout(): double
+    +printReceipt(String user): void  
 }
 
-Food --> menuItems
-Drink --> menuItems
+' 
+
+Item <|-- Food
+Item <|-- Drink
+Menu <.. Customer: uses
+Menu <.. Order: uses
+Customer "1" *-- "1" Order
 @enduml

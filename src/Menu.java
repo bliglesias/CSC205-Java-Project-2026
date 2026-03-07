@@ -26,9 +26,4 @@ public class Menu {
     // expose the list
     public ArrayList<Item> getMenu(){ return menu; }
 
-    
-    
-
-    
-    
 }
